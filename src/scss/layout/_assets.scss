@@ -1,0 +1,26 @@
+@use '../colors' as *;
+@use '../mixins' as *;
+
+.btn {
+   @include text-header;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: $yellow;
+	background-color: transparent;
+	padding: 10px 28px;
+	border: 2px solid $yellow;
+	transition: all 0.3s ease;
+	white-space: nowrap;
+
+	&:hover {
+		color: $black;
+		background-color: $white;
+      	border: 2px solid $white;
+	}
+
+	&--nav {
+		margin-left: 34px;
+	}
+}

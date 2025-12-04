@@ -1,0 +1,21 @@
+@use './colors' as *;
+
+@mixin h1 {
+	font-family: 'Montserrat-Bold', sans-serif;
+	font-size: 40px;
+   color: $white;
+	line-height: 43px;
+	letter-spacing: 2px;
+}
+
+@mixin h1 {
+	font-family: 'Poppins-Bold', sans-serif;
+	font-size: 28px;
+   color: $black;
+}
+
+@mixin text-header {
+	font-family: 'Poppins-Bold', sans-serif;
+	font-size: 14px;
+   color: $black;
+}
