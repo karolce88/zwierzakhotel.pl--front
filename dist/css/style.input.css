@@ -1,0 +1,286 @@
+@font-face {
+  font-family: "Poppins-Regular";
+  src: url("../assets/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Poppins-Bold";
+  src: url("../assets/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("../assets/fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 14px;
+  font-family: "Poppins-Regular", sans-serif;
+  line-height: 24px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1288px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.current_page_item,
+.current_page_ancestor {
+  color: #101A40;
+  position: relative;
+}
+.current_page_item::after,
+.current_page_ancestor::after {
+  position: absolute;
+  content: "";
+  bottom: 0px;
+  left: 20%;
+  height: 1px;
+  width: 62%;
+  background-color: #fee656;
+}
+
+.navigation-container {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: 90px;
+  box-shadow: 0 1px 5px -3px #000;
+  background-color: #101A40;
+  display: flex;
+  align-items: center;
+}
+
+.nav-hidden {
+  transform: translateY(-100%);
+}
+
+.navigation {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+}
+.navigation__logo {
+  z-index: 17;
+}
+.navigation__logo img {
+  position: absolute;
+  display: inline-block;
+  margin: 4px 5px 0 0;
+  height: 158px;
+  transition: all 0.5s ease-in-out;
+  top: 0px;
+  left: 20px;
+}
+.navigation .change-height-logo {
+  height: 82px;
+  width: auto;
+}
+.navigation__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 16;
+}
+@media (max-width: 1300px) {
+  .navigation__box {
+    position: absolute;
+    background-color: #2F4269;
+    width: 115%;
+    height: 100dvh;
+    transform: translateX(30%);
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 40px;
+    padding-top: 130px;
+    transition: transform 0.38s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .navigation__box .menu-desktop-container .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .navigation__box .menu-desktop-container .menu-item a {
+    padding: 7px;
+    color: #F8F8F8;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .navigation__box .menu-desktop-container .menu-item a:hover {
+    color: #fee656;
+  }
+  .navigation__box .menu-desktop-container .sub-menu {
+    display: none;
+  }
+  .navigation__box .current_page_item::after,
+  .navigation__box .current_page_ancestor::after {
+    position: absolute;
+    bottom: 0px;
+    left: 4%;
+    height: 1px;
+    width: 20%;
+    background-color: #fee656;
+  }
+}
+.navigation__box.show-mobile-menu {
+  transform: translateX(-6%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.navigation .menu {
+  list-style: none;
+  display: flex;
+}
+@media (min-width: 1301px) {
+  .navigation .menu-item a {
+    padding: 10px 14px;
+    text-decoration: none;
+    color: #F8F8F8;
+    transition: all 0.3s ease;
+  }
+  .navigation .menu-item a:hover {
+    color: #fee656;
+  }
+  .navigation .menu-item a:hover .sub-menu {
+    display: flex;
+  }
+  .navigation .custom-a-2 {
+    padding: 2px 0;
+  }
+}
+
+.current_page_item > a {
+  color: #fee656 !important;
+}
+
+.burger-btn {
+  position: relative;
+  width: 30px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 20;
+  display: none;
+}
+@media (max-width: 1300px) {
+  .burger-btn {
+    display: flex;
+  }
+}
+
+.burger-btn span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #F8F8F8;
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+.burger-btn span:nth-child(1) {
+  top: 0;
+}
+
+.burger-btn span:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.burger-btn span:nth-child(3) {
+  bottom: 0;
+}
+
+.burger-btn.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 50%;
+  left: 0;
+}
+
+.burger-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-btn.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 50%;
+  left: 0;
+}
+
+.btn {
+  font-family: "Poppins-Bold", sans-serif;
+  font-size: 14px;
+  color: #141414;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fee656;
+  background-color: transparent;
+  padding: 10px 28px;
+  border: 2px solid #fee656;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  color: #141414;
+  background-color: #F8F8F8;
+  border: 2px solid #F8F8F8;
+}
+.btn--nav {
+  margin-left: 34px;
+}
+
+.header-main-page {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-image: url("../assets/Hero-img-Psi-Hotel-Pila.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.header-main-page::after {
+  position: absolute;
+  content: "";
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(9, 15, 55, 0.65);
+}
