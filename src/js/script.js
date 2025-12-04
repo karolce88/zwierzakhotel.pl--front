@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+	const logoImg = document.querySelector('.JSlogo a img')
 	const footerYear = document.querySelector('.JSyear')
 
-
 	const handleCurrentYear = () => {
-      if (footerYear) {
-         const year = new Date().getFullYear()
-         footerYear.innerText = year
-      }
+		if (footerYear) {
+			const year = new Date().getFullYear()
+			footerYear.innerText = year
+		}
 	}
 	handleCurrentYear()
 
@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	const handleMobileMenu = () => {
 		const showNav = () => {
 			mobileMenu.classList.add('show-mobile-menu')
-			burgerBtn.classList.add('active') 
+			burgerBtn.classList.add('active')
 		}
 
 		const hideNav = () => {
 			mobileMenu.classList.remove('show-mobile-menu')
-			burgerBtn.classList.remove('active') 
+			burgerBtn.classList.remove('active')
 		}
 
 		const overflowBody = () => {
@@ -35,9 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (mobileMenu.classList.contains('show-mobile-menu')) {
 				hideNav()
 				overflowBody()
+				logoImg.classList.remove('change-height-logo')
 			} else {
 				showNav()
 				overflowBody()
+				logoImg.classList.add('change-height-logo')
 			}
 		})
 
@@ -47,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (mobileMenu.classList.contains('show-mobile-menu')) {
 					hideNav()
 					overflowBody()
+					logoImg.classList.remove('change-height-logo')
 				}
 			})
 		})
@@ -63,9 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	handleMobileMenu()
 
 	const changeLogoHeightDuringScrol = () => {
-		const logoImg = document.querySelector('.JSlogo a img')
 		if (!logo) return
-		const TRIGGER = 280
+		const TRIGGER = 150
 		let ticking = false
 		function onScroll() {
 			const scrollY = window.scrollY
@@ -119,7 +121,5 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	handleNavDuringScroll()
 
-
-	
 	// END
 })

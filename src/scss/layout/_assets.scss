@@ -2,7 +2,7 @@
 @use '../mixins' as *;
 
 .btn {
-   @include text-header;
+	@include text-header;
 	text-decoration: none;
 	display: flex;
 	align-items: center;
@@ -17,10 +17,26 @@
 	&:hover {
 		color: $black;
 		background-color: $white;
-      	border: 2px solid $white;
+		border: 2px solid $white;
 	}
 
 	&--nav {
 		margin-left: 34px;
+	}
+
+	&--white {
+		border: 2px solid $white;
+		color: $white;
+	}
+}
+
+// animation
+
+@keyframes mouse-anim {
+	0% {
+		transform: translateY(0px);
+	}
+	100% {
+		transform: translateY(-30px);
 	}
 }
