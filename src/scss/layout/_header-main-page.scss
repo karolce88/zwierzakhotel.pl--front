@@ -94,9 +94,9 @@
 	&__arrow-down {
 		position: absolute;
 		z-index: 1;
-		left: 43%;
-		bottom: 2%;
 		cursor: pointer;
+		bottom: 2%;
+		left: 44%;
 		animation: mouse-anim 1.7s linear(0.785, 0.135, 0.15, 0.86) infinite both;
 
 		&:hover {

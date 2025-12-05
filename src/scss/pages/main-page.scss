@@ -2,5 +2,54 @@
 @use '../mixins' as *;
 
 .benefit-icons {
-   height: 300px;
+	@include ptb90;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+
+	&__box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+	}
+
+	&__txt {
+		text-align: center;
+		@include text-header;
+		max-width: 140px;
+		padding-left: 10px;
+	}
+
+	&__img {
+		width: 110px;
+		height: 84px;
+	}
+
+	@media (max-width: 768px) {
+		&__img {
+			width: 60px;
+			height: 46px;
+		}
+
+		&__box {
+			gap: 8px;
+		}
+
+		&__txt {
+			font-size: 12px;
+			line-height: 18px;
+         max-width: 110px;
+		}
+	}
+
+	@media (max-width: 475px) {
+		grid-template-columns: repeat(2, 1fr);
+      gap: 20px 0;
+	}
+}
+
+.animals-lovers {
+	@include ptb90;
+	background-color: $white;
 }

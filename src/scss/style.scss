@@ -5,3 +5,10 @@
 @use './layout/assets' as *;
 @use './layout/header-main-page' as *;
 @use './pages/main-page' as *;
+
+
+@media (max-width: 475px) {}   /* bardzo małe telefony */
+@media (min-width: 576px) {}   /* telefony */
+@media (min-width: 768px) {}   /* tablety */
+@media (min-width: 992px) {}   /* desktopy */
+@media (min-width: 1200px) {}  /* duże desktopy */

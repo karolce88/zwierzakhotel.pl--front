@@ -340,51 +340,50 @@ function openBrowser(url: string) {
 // DEV SERVER
 // ------------------
 async function devServer() {
-	await buildAll()
+  await buildSass()
+  await buildTailwind()
+  await buildJS()
+  await copyAssets()
 
-	const clients = new Set<import('ws').WebSocket>()
-	const hmrClients = new Set<import('ws').WebSocket>()
-	const wss = new WebSocketServer({ port: 35729 })
+  const clients = new Set<import('ws').WebSocket>()
+  const hmrClients = new Set<import('ws').WebSocket>()
+  const wss = new WebSocketServer({ port: 35729 })
 
-	wss.on('connection', (ws) => {
-		clients.add(ws)
-		ws.on('message', (data) => {
-			try {
-				const msg = typeof data === 'string' ? JSON.parse(data) : JSON.parse(data.toString())
-				if (msg?.type === 'hmr') hmrClients.add(ws)
-			} catch {}
-		})
-		ws.on('close', () => {
-			clients.delete(ws)
-			hmrClients.delete(ws)
-		})
-	})
+  wss.on('connection', (ws) => {
+    clients.add(ws)
+    ws.on('message', (data) => {
+      try {
+        const msg = typeof data === 'string' ? JSON.parse(data) : JSON.parse(data.toString())
+        if (msg?.type === 'hmr') hmrClients.add(ws)
+      } catch {}
+    })
+    ws.on('close', () => {
+      clients.delete(ws)
+      hmrClients.delete(ws)
+    })
+  })
 
-	const broadcastReloadToAll = () => {
-		for (const ws of clients) ws.send('reload')
-	}
+  const broadcastReloadToAll = () => {
+    for (const ws of clients) ws.send('reload')
+  }
 
-	const injectCSS = async () => {
-		const cssPath = path.join(dist, 'css', 'style.css')
-		if (!fs.existsSync(cssPath)) return
-		const css = fs.readFileSync(cssPath, 'utf-8')
-		for (const ws of hmrClients) {
-			ws.send(JSON.stringify({ type: 'css', content: css }))
-		}
-	}
+  const injectCSS = async () => {
+    const cssPath = path.join(dist, 'css', 'style.css')
+    if (!fs.existsSync(cssPath)) return
+    const css = fs.readFileSync(cssPath, 'utf-8')
+    for (const ws of hmrClients) {
+      ws.send(JSON.stringify({ type: 'css', content: css }))
+    }
+  }
 
-	const server = Bun.serve({
-		port: 3000,
-		fetch(req) {
-			const url = new URL(req.url)
-			if (url.pathname === '/live-reload.js') {
-				const liveFile = path.join(src, 'js', 'live-reload.js')
-				if (fs.existsSync(liveFile)) {
-					return new Response(fs.readFileSync(liveFile, 'utf8'), {
-						headers: { 'Content-Type': 'application/javascript' },
-					})
-				}
-				const js = `
+  const server = Bun.serve({
+    port: 3000,
+    fetch(req) {
+      const url = new URL(req.url)
+
+      // LIVE RELOAD SCRIPT
+      if (url.pathname === '/live-reload.js') {
+        const js = `
           const ws = new WebSocket('ws://localhost:35729');
           ws.addEventListener('open', () => { try { ws.send(JSON.stringify({ type: 'hmr' })) } catch {} });
           ws.onmessage = (event) => {
@@ -404,77 +403,97 @@ async function devServer() {
             location.reload();
           };
         `
-				return new Response(js, { headers: { 'Content-Type': 'application/javascript' } })
-			}
+        return new Response(js, { headers: { 'Content-Type': 'application/javascript' } })
+      }
 
-			let filePath = path.join(dist, url.pathname === '/' ? 'index.html' : url.pathname)
-			if (!fs.existsSync(filePath)) return new Response('Not Found', { status: 404 })
+      // Serve HTML from src/html
+      if (url.pathname === '/' || url.pathname.endsWith('.html')) {
+        const pageName = url.pathname === '/' ? 'index.html' : path.basename(url.pathname)
+        const rawPath = path.join(src, 'html', pageName)
 
-			const ext = path.extname(filePath).toLowerCase()
-			const mimeTypes: Record<string, string> = {
-				'.js': 'application/javascript',
-				'.ts': 'application/javascript',
-				'.css': 'text/css',
-				'.html': 'text/html',
-				'.png': 'image/png',
-				'.jpg': 'image/jpeg',
-				'.jpeg': 'image/jpeg',
-				'.svg': 'image/svg+xml',
-				'.gif': 'image/gif',
-			}
+        if (!fs.existsSync(rawPath)) {
+          return new Response('Not Found', { status: 404 })
+        }
 
-			if (ext === '.html') {
-				let html = fs.readFileSync(filePath, 'utf-8')
-				html = html.replace('</body>', `<script src="/live-reload.js"></script></body>`)
-				return new Response(html, { headers: { 'Content-Type': 'text/html' } })
-			}
+        const rawHTML = fs.readFileSync(rawPath, 'utf-8')
+        const processed = processHTMLIncludes(rawHTML, path.join(src, 'html', 'partials'))
 
-			const data = fs.readFileSync(filePath)
-			return new Response(data, { headers: { 'Content-Type': mimeTypes[ext] || 'text/plain' } })
-		},
-	})
+        const withLiveReload = processed.replace(
+          '</body>',
+          `<script src="/live-reload.js"></script></body>`
+        )
 
-	console.log(`${colors.green}🔥 Dev server running → http://localhost:3000${colors.reset}`)
-	openBrowser('http://localhost:3000')
+        return new Response(withLiveReload, {
+          headers: { 'Content-Type': 'text/html' }
+        })
+      }
 
-	let timeout: NodeJS.Timeout
+      // Serve other static files from dist
+      let filePath = path.join(dist, url.pathname)
+      if (!fs.existsSync(filePath)) return new Response('Not Found', { status: 404 })
 
-	fs.watch(src, { recursive: true }, (eventType, filename) => {
-		if (!filename) return
-		clearTimeout(timeout)
+      const ext = path.extname(filePath).toLowerCase()
+      const mimeTypes: Record<string, string> = {
+        '.js': 'application/javascript',
+        '.ts': 'application/javascript',
+        '.css': 'text/css',
+        '.html': 'text/html',
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.svg': 'image/svg+xml',
+        '.gif': 'image/gif',
+      }
 
-		timeout = setTimeout(async () => {
-			const ext = path.extname(filename).toLowerCase()
+      const data = fs.readFileSync(filePath)
+      return new Response(data, {
+        headers: { 'Content-Type': mimeTypes[ext] || 'text/plain' }
+      })
+    },
+  })
 
-			if (ext === '.scss') {
-				console.log(`${colors.green}↻ SCSS changed: ${filename}${colors.reset}`)
-				await buildSass()
-				await buildTailwind()
-				await injectCSS()
-				broadcastReloadToAll()
-			} else if (ext === '.ts' || ext === '.js') {
-				console.log(`${colors.green}↻ JS changed: ${filename}${colors.reset}`)
-				await buildJS()
-				broadcastReloadToAll()
-			} else if (ext === '.html') {
-				console.log(`${colors.green}↻ HTML changed: ${filename}${colors.reset}`)
-				await buildHTML()
-				broadcastReloadToAll()
-			} else if (filename.includes('assets')) {
-				console.log(`${colors.green}↻ Asset changed: ${filename}${colors.reset}`)
-				await copyAssets()
-				broadcastReloadToAll()
-			}
-		}, 200)
-	})
+  console.log(`${colors.green}🔥 Dev server running → http://localhost:3000${colors.reset}`)
+  openBrowser('http://localhost:3000')
 
-	process.on('SIGINT', () => {
-		server.stop()
-		wss.close()
-		console.log('\nServer stopped')
-		process.exit(0)
-	})
+  let timeout: NodeJS.Timeout
+
+  fs.watch(src, { recursive: true }, (eventType, filename) => {
+    if (!filename) return
+    clearTimeout(timeout)
+
+    timeout = setTimeout(async () => {
+      const ext = path.extname(filename).toLowerCase()
+
+      if (ext === '.scss') {
+        console.log(`${colors.green}↻ SCSS changed: ${filename}${colors.reset}`)
+        await buildSass()
+        await buildTailwind()
+        await injectCSS()
+        broadcastReloadToAll()
+      } else if (ext === '.ts' || ext === '.js') {
+        console.log(`${colors.green}↻ JS changed: ${filename}${colors.reset}`)
+        await buildJS()
+        broadcastReloadToAll()
+      } else if (ext === '.html') {
+        console.log(`${colors.green}↻ HTML changed: ${filename}${colors.reset}`)
+        // bez buildHTML!
+        broadcastReloadToAll()
+      } else if (filename.includes('assets')) {
+        console.log(`${colors.green}↻ Asset changed: ${filename}${colors.reset}`)
+        await copyAssets()
+        broadcastReloadToAll()
+      }
+    }, 200)
+  })
+
+  process.on('SIGINT', () => {
+    server.stop()
+    wss.close()
+    console.log('\nServer stopped')
+    process.exit(0)
+  })
 }
+
 
 // ------------------
 // RUN

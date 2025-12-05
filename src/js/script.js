@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const logoImg = document.querySelector('.JSlogo a img')
 	const footerYear = document.querySelector('.JSyear')
+	const burgerBtn = document.querySelector('.JS-burger')
+	const mobileMenu = document.querySelector('.JSmobile-nav')
+	const mobileMenuLinks = document.querySelectorAll('.menu-item a')
+	const logo = document.querySelector('.JSlogo')
+	const body = document.body
 
 	const handleCurrentYear = () => {
 		if (footerYear) {
@@ -9,12 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 	handleCurrentYear()
-
-	const burgerBtn = document.querySelector('.JS-burger')
-	const mobileMenu = document.querySelector('.JSmobile-nav')
-	const mobileMenuLinks = document.querySelectorAll('.menu-item a')
-	const logo = document.querySelector('.JSlogo')
-	const body = document.body
 
 	const handleMobileMenu = () => {
 		const showNav = () => {
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 
 		const overflowBody = () => {
-			body.classList.toggle('overflow-hidden-body')
+			body.classList.toggle('hold-body')
 		}
 
 		burgerBtn.addEventListener('click', () => {
