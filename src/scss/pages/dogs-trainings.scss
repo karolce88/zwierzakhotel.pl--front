@@ -1,0 +1,62 @@
+@use '../colors' as *;
+@use '../mixins' as *;
+
+.course {
+	@include ptb90;
+	background-color: $yellow;
+}
+
+.course-box {
+	padding: 0 110px;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+
+	&__h2 {
+		@include h2;
+
+		&::after {
+			position: absolute;
+			content: '';
+			left: 0px;
+			top: -5px;
+			width: 45px;
+			height: 45px;
+			background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2245%22%20height%3D%2245%22%20viewBox%3D%220%200%2045%2045%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M22.5%2028.125C22.5%2029.6168%2023.0926%2031.0476%2024.1475%2032.1025C25.2024%2033.1574%2026.6332%2033.75%2028.125%2033.75C29.6168%2033.75%2031.0476%2033.1574%2032.1025%2032.1025C33.1574%2031.0476%2033.75%2029.6168%2033.75%2028.125C33.75%2026.6332%2033.1574%2025.2024%2032.1025%2024.1475C31.0476%2023.0926%2029.6168%2022.5%2028.125%2022.5C26.6332%2022.5%2025.2024%2023.0926%2024.1475%2024.1475C23.0926%2025.2024%2022.5%2026.6332%2022.5%2028.125Z%22%20stroke%3D%22%232F4269%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M24.375%2032.8125V41.25L28.125%2038.4375L31.875%2041.25V32.8125%22%20stroke%3D%22%232F4269%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M18.75%2035.625H9.375C8.38044%2035.625%207.42661%2035.2299%206.72335%2034.5266C6.02009%2033.8234%205.625%2032.8696%205.625%2031.875V13.125C5.625%2011.0625%207.3125%209.375%209.375%209.375H35.625C36.6196%209.375%2037.5734%209.77009%2038.2766%2010.4733C38.9799%2011.1766%2039.375%2012.1304%2039.375%2013.125V31.875C39.3743%2032.5326%2039.2007%2033.1785%2038.8716%2033.7478C38.5425%2034.3172%2038.0695%2034.7899%2037.5%2035.1187M11.25%2016.875H33.75M11.25%2022.5H16.875M11.25%2028.125H15%22%20stroke%3D%22%232F4269%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E');
+		}
+	}
+}
+
+.video {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&__box {
+		position: relative;
+		padding-bottom: 8%;
+		height: 0;
+		overflow: hidden;
+	}
+
+	&__player {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+}
+
+.certificate {
+	@include pt90;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 30px;
+
+	@media (max-width: 992px) {
+      flex-wrap: wrap;
+	}
+}

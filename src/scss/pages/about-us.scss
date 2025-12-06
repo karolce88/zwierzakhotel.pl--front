@@ -1,0 +1,19 @@
+@use '../colors' as *;
+@use '../mixins' as *;
+
+.about {
+   @include ptb90;
+}
+.aboutus {
+   display: flex;
+   flex-direction: column;
+   gap: 30px;
+
+   &__h2 {
+      @include h2;
+   }
+}
+
+.section-background-slawka {
+   padding: 0 0 90px 0;
+}

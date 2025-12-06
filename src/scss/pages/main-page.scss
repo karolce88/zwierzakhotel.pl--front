@@ -1,6 +1,7 @@
 @use '../colors' as *;
 @use '../mixins' as *;
 
+
 .benefit-icons {
 	@include ptb90;
 	display: grid;
@@ -49,7 +50,3 @@
 	}
 }
 
-.animals-lovers {
-	@include ptb90;
-	background-color: $white;
-}

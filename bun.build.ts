@@ -476,7 +476,7 @@ async function devServer() {
         broadcastReloadToAll()
       } else if (ext === '.html') {
         console.log(`${colors.green}↻ HTML changed: ${filename}${colors.reset}`)
-        // bez buildHTML!
+        await buildHTML() // 💥 tutaj dodajemy buildHTML
         broadcastReloadToAll()
       } else if (filename.includes('assets')) {
         console.log(`${colors.green}↻ Asset changed: ${filename}${colors.reset}`)

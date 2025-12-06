@@ -1,0 +1,19 @@
+@use '../colors' as *;
+@use '../mixins' as *;
+
+.amenities {
+	@include ptb90;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 30px;
+   padding-bottom: 0;
+
+	&__h2 {
+		@include h2;
+	}
+
+	&__txt {
+      text-align: center;
+	}
+}

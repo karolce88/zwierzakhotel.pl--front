@@ -1,0 +1,94 @@
+@use '../colors' as *;
+@use '../mixins' as *;
+
+.contact {
+	@include ptb90;
+	display: flex;
+	gap: 90px;
+	justify-content: space-between;
+
+	@media (max-width: 1100px) {
+		gap: 50px;
+	}
+
+	@media (max-width: 1000px) {
+		flex-direction: column;
+	}
+}
+
+.contact-box {
+	display: flex;
+	flex-direction: column;
+	gap: 45px;
+	padding: 75px 90px;
+	background-color: $white;
+
+	@media (max-width: 638px) {
+		padding: 65px 35px;
+	}
+
+	&__h3 {
+		@include text-header;
+	}
+
+	&__h2 {
+		@include h2;
+	}
+
+	&__company {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__map {
+		width: 667px;
+
+		@media (max-width: 1286px) {
+			width: 580px;
+		}
+
+		@media (max-width: 1286px) {
+			width: 400px;
+		}
+
+		@media (max-width: 1000px) {
+			width: 100% !important;
+		}
+	}
+
+	&__contact {
+		display: flex;
+		justify-content: space-between;
+
+		@media (max-width: 1000px) {
+			max-width: 450px;
+		}
+
+		@media (max-width: 638px) {
+			flex-direction: column;
+			gap: 40px;
+		}
+	}
+
+	&__name {
+		padding: 6px 0;
+	}
+
+	&__contact-item {
+		margin-top: 14px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+
+		a {
+			text-decoration: none;
+			color: $black;
+			transition: all 0.3s ease;
+
+			&:hover {
+				color: $blue;
+			}
+		}
+	}
+}
