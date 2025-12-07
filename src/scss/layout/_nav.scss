@@ -1,23 +1,6 @@
 @use '../colors' as *;
 @use '../mixins' as *;
 
-// podkreslenie aktywnej strony w menu
-.current_page_item,
-.current_page_ancestor {
-	color: $blue-dark;
-	position: relative;
-
-	&::after {
-		position: absolute;
-		content: '';
-		bottom: 0px;
-		left: 20%;
-		height: 1px;
-		width: 62%;
-		background-color: $yellow;
-	}
-}
-
 .navigation-container {
 	position: fixed;
 	z-index: 10;
@@ -43,6 +26,26 @@
 	justify-content: space-between;
 	align-items: center;
 	height: 90px;
+
+	// handle active element menu - desktop menu
+	.current_page_item,
+	.current_page_ancestor {
+		position: relative;
+
+		a {
+			color: $yellow !important;
+		}
+
+		&::after {
+			position: absolute;
+			content: '';
+			bottom: 0px;
+			left: 20%;
+			height: 1px;
+			width: 62%;
+			background-color: $yellow;
+		}
+	}
 
 	&__logo {
 		z-index: 17;
@@ -109,9 +112,9 @@
 				}
 			}
 
+			//mobile menu - active element menu
 			.current_page_item,
 			.current_page_ancestor {
-
 				&::after {
 					position: absolute;
 					bottom: 0px;
@@ -159,10 +162,6 @@
 			padding: 2px 0;
 		}
 	}
-}
-
-.current_page_item > a {
-	color: $yellow !important;
 }
 
 //burger btn:

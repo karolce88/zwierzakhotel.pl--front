@@ -16,24 +16,146 @@
 		display: flex;
 		justify-content: space-between;
 
-      @media (max-width: 920px) {
-         flex-direction: column;
-         gap: 20px;
-      }
+		@media (max-width: 920px) {
+			flex-direction: column;
+			gap: 20px;
+		}
 	}
 
 	&__txt-bottom {
 		color: $white;
-      font-size: 12px;
+		font-size: 12px;
 
 		a {
 			text-decoration: none;
 			color: $white;
-         transition: all .3s ease;
+			transition: all 0.3s ease;
 
 			&:hover {
 				color: $yellow;
 			}
 		}
+	}
+
+	&__top {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 4.5rem 1rem;
+		color: $white;
+		margin-bottom: 150px;
+	}
+
+	&__logo {
+		width: 145px;
+		background-color: #fff;
+		padding: 5px;
+		margin-bottom: 25px;
+	}
+
+	&__company-data-inner {
+		display: flex;
+		flex-direction: column;
+		// gap: 20px;
+	}
+
+	&__cp-name {
+		@include text-header;
+		color: $white;
+		max-width: 250px;
+	}
+
+	&__menu,
+	&__menu-info,
+	&__menu-info-inner {
+		display: flex;
+		flex-direction: column;
+		gap: 2.6rem;
+
+		.menu {
+			list-style: none;
+
+			.menu-item {
+				margin-bottom: 12px;
+
+				a {
+					color: $white;
+					text-decoration: none;
+					transition: all 0.3s ease;
+
+					&:hover {
+						color: $yellow;
+					}
+				}
+			}
+		}
+	}
+
+	@media (max-width: 836px) {
+		&__menu-info-inner {
+			margin-top: 3rem;		}
+	}
+
+	&__menu-info {
+		a {
+			text-decoration: none;
+			color: $white;
+			transition: all 0.3s ease;
+			display: inline-block;
+
+			&:hover {
+				color: $yellow;
+			}
+		}
+	}
+
+	&__contact-head {
+		@include text-header;
+		color: $white;
+		margin-bottom: 4px;
+	}
+
+	&__h3 {
+		font-size: 22px;
+	}
+
+	// handle active element menu - footer menu
+	.current_page_item,
+	.current_page_ancestor {
+		position: relative;
+
+		a {
+			color: $yellow !important;
+		}
+
+		&::after {
+			position: absolute;
+			content: '';
+			bottom: 0px;
+			left: 0%;
+			height: 1px;
+			width: 11%;
+			background-color: $yellow;
+		}
+	}
+
+	&__contact-phone-box {
+		display: flex;
+		gap: 8px;
+
+		a {
+			&:first-of-type {
+				padding-bottom: 15px;
+			}
+		}
+	}
+
+	&__open {
+		@include text-header;
+		color: $yellow;
+	}
+
+	&__map-item {
+		max-width: 280px;
+		width: 100%;
 	}
 }
