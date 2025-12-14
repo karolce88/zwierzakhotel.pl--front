@@ -1,0 +1,102 @@
+@use '../colors' as *;
+@use '../mixins' as *;
+
+.privacy-policy-rules-container {
+	@include ptb90;
+}
+
+.privacy-policy-rules {
+	max-width: 900px;
+	margin: 0 auto;
+	// padding: 40px 20px;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.7;
+	color: #333;
+	background-color: #fff;
+
+	h1,
+	h2 {
+		text-align: center;
+		margin-bottom: 25px;
+		font-weight: 700;
+		color: #1a1a1a;
+	}
+
+	h1 {
+		font-size: 32px;
+		margin-top: 0;
+	}
+
+	h2 {
+		font-size: 24px;
+		margin-top: 40px;
+		margin-bottom: 20px;
+	}
+
+	p {
+		margin-bottom: 20px;
+	}
+
+	ul {
+		margin: 15px 0 25px 20px;
+		padding: 0;
+		list-style-type: disc;
+
+		li {
+			margin-bottom: 10px;
+			line-height: 1.6;
+
+			ul {
+				margin-left: 20px;
+				list-style-type: circle;
+
+				li {
+					margin-bottom: 8px;
+				}
+			}
+		}
+	}
+
+	a {
+		color: $blue-dark;
+		text-decoration: none;
+		transition: all 0.3s;
+
+		&:hover {
+			text-decoration: underline;
+			color: $black;
+		}
+	}
+
+	strong {
+		font-weight: 600;
+	}
+
+	@media screen and (max-width: 768px) {
+		padding: 20px 15px;
+
+		h1 {
+			font-size: 26px;
+		}
+
+		h2 {
+			font-size: 20px;
+		}
+
+		font-size: 15px;
+	}
+
+	@media screen and (max-width: 480px) {
+		padding: 15px 10px;
+		font-size: 14px;
+
+		h1 {
+			font-size: 22px;
+		}
+
+		h2 {
+			font-size: 18px;
+		}
+	}
+}

@@ -12,6 +12,8 @@
 @use './pages/about-us' as *;
 @use './pages/gallery' as *;
 @use './pages/contact' as *;
+@use './pages/rules-privacy-policy' as *;
+@use './pages/404' as *;
 @use './base' as *;
 
 @media (max-width: 475px) {}   /* small smartphone */

@@ -2,8 +2,27 @@
 @@include("header-pages.html")
 <main>
    <div class="wrapper">
-      galeria
+      <div class="gallery" data-aos="fade-up" data-aos-delay="150" data-aos-duration="250">
+         <?php $galeria_images = get_field('galeria'); ?>
+         <?php if ($galeria_images) : ?>
+            <div class="gallery__container" \>
+               <?php foreach ($galeria_images as $galeria_image): ?>
+                  <a
+                     href="<?php echo esc_url($galeria_image['url']); ?>"
+                     data-fancybox="gallery__link"
+                     data-caption="<?php echo esc_attr($galeria_image['caption']); ?>">
+                     <img class="gallery__img"
+                        src="<?php echo esc_url($galeria_image['sizes']['thumbnail']); ?>"
+                        alt="<?php echo esc_attr($galeria_image['alt']); ?>"
+                        loading="lazy" />
+                  </a>
+               <?php endforeach; ?>
+            </div>
+         <?php endif; ?>
+
+      </div>
    </div>
 </main>
 @@include("cta.html")
 @@include("footer.html")
+

@@ -1,0 +1,46 @@
+@use '../colors' as *;
+@use '../mixins' as *;
+
+.page-404 {
+	@include ptb90;
+}
+
+.page-404-container {
+	padding: 100px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+
+	&__404 {
+		font-family: 'PassionOne-Regular', sans-serif;
+		font-weight: 500;
+		font-size: 150px;
+		color: $blue-dark;
+		line-height: 160px;
+		letter-spacing: 16px;
+	}
+
+	&__h3 {
+		font-size: 25px;
+		text-align: center;
+	}
+
+	&__p {
+		font-size: 16px;
+		text-align: center;
+	}
+
+	&__btn404 {
+		margin-top: 30px;
+		background-color: $yellow;
+		border: 2px solid $yellow;
+		color: $black;
+
+		&:hover {
+			color: white;
+			background-color: $blue;
+			border: 2px solid $blue-dark;
+		}
+	}
+}
